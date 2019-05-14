@@ -70,9 +70,10 @@ DOWNLOADER_MIDDLEWARES = {
 
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'ArticleSpider.pipelines.ArticlespiderPipeline': 300,
-#}
+ITEM_PIPELINES = {
+   # 'ArticleSpider.pipelines.ArticlespiderPipeline': 300,
+   'ArticleSpider.pipelines.MysqlTwistedPipline': 1,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
@@ -97,3 +98,8 @@ DOWNLOADER_MIDDLEWARES = {
 
 SQL_DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
 SQL_DATE_FORMAT = "%Y-%m-%d"
+
+MYSQL_HOST = "127.0.0.1"
+MYSQL_DBNAME = "article_spider"
+MYSQL_USER = "root"
+MYSQL_PASSWORD = "root"
