@@ -6,6 +6,7 @@
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 from twisted.enterprise import adbapi
 import MySQLdb
+import MySQLdb.cursors
 
 
 
