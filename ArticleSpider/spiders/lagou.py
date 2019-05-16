@@ -59,7 +59,7 @@ class LagouSpider(CrawlSpider):
             cookie_dict[cookie["name"]] = cookie["value"]
 
         for url in self.start_urls:
-            yield scrapy.Request(url, dont_filter=True, cookies=cookie_dict)
+            yield scrapy.Request(url, dont_filter=True, cookies=cookie_dict, errback=None)
 
     def parse_job(self, response):
         item_loader = LagouJobItemLoader(item=LagouJobItem(), response=response)

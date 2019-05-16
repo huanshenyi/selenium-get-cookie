@@ -16,7 +16,9 @@ NEWSPIDER_MODULE = 'ArticleSpider.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-# USER_AGENT = 'ArticleSpider (+http://www.yourdomain.com)'
+USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.157 Safari/537.36'
+
+RANDOM_UA_TYPE = "random"
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
@@ -38,7 +40,7 @@ DOWNLOAD_DELAY = 2
 # Disable cookies (enabled by default)
 COOKIES_ENABLED = True
 COOKIES_DEBUG = True
-USER_AGENT = ""
+
 
 # Disable Telnet Console (enabled by default)
 #TELNETCONSOLE_ENABLED = False
@@ -58,8 +60,9 @@ USER_AGENT = ""
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
-  # 'ArticleSpider.middlewares.ArticlespiderDownloaderMiddleware': 543,
-    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': 2,
+    'ArticleSpider.middlewares.RandomUserAgentMiddleware': 543,
+    #defaultのmiddlewaresを消す
+    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
 }
 
 # Enable or disable extensions
