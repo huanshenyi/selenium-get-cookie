@@ -43,9 +43,9 @@ class LagouSpider(CrawlSpider):
             browser = webdriver.Chrome(executable_path=driverPath)
             browser.get('https://passport.lagou.com/login/login.html')
             userInput = browser.find_element_by_xpath("//div[@class='form_body']//input[@class='input input_white']")
-            userInput.send_keys('00819067116116')
+            userInput.send_keys('')
             pswdInput = browser.find_element_by_xpath("//div[@class='form_body']//input[@type='password']").send_keys(
-                'txy1226052')
+                '')
             browser.find_element_by_xpath("//div[@class='form_body']//input[@type='submit']").click()
             time.sleep(10)
             # 2.cookie取得
