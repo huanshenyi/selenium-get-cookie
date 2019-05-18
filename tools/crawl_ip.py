@@ -37,9 +37,41 @@ def crawl_ips():
             conn.commit()
 
 class GetIp(object):
-    def judge_ip(self):
+    def delete_ip(self, ip):
+        #dbから無効なipを削除
+        delete_sql = """
+           delete from proxy_ip where ip='{0}'
+        """.format(ip)
+        cursor.execute(delete_sql)
+        conn.commit()
+        return True
+
+
+    def judge_ip(self, ip, port):
         #ip使えるかどうか判断
-        pass
+        http_url = 'http://www.baidu.com'
+        proxy_url = "https://{0}:{1}".format(ip, port)
+        try:
+            proxy_dict = {
+                "http": proxy_url,
+                #httpsの指定追加もok
+            }
+
+            response = requests.get(http_url, proxies=proxy_dict)
+        except Exception as err:
+             print('invalid ip and port')
+             self.delete_ip(ip)
+             return False
+        else:
+            code = response.status_code
+            if code >= 200 and code < 300:
+                print("effective ip")
+                return True
+            else:
+                print('invalid ip and port')
+                self.delete_ip(ip)
+                return False
+
 
     def get_random_ip(self):
         #dbにランダムなipを取得
@@ -52,7 +84,13 @@ class GetIp(object):
             for ip_info in cursor.fetchall():
                 ip = ip_info[0]
                 port = ip_info[1]
+                judge_re = self.judge_ip(ip, port)
+                if judge_re:
+                    return "https://{0}:{1}".format(ip, port)
+                else:
+                    return self.get_random_ip()
 
 
-
-crawl_ips()
+if __name__ == "__main__":
+    get_ip = GetIp()
+    get_ip.get_random_ip()
