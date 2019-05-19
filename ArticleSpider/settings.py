@@ -22,8 +22,6 @@ RANDOM_UA_TYPE = "random"
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
-import os
-import sys
 
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
@@ -38,6 +36,7 @@ DOWNLOAD_DELAY = 2
 #CONCURRENT_REQUESTS_PER_IP = 16
 
 # Disable cookies (enabled by default)
+# 一部のさいとではクッキーでspiderの判断する、ここでクッキーを禁止
 COOKIES_ENABLED = True
 COOKIES_DEBUG = True
 
@@ -60,9 +59,10 @@ COOKIES_DEBUG = True
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
-    'ArticleSpider.middlewares.RandomUserAgentMiddleware': 543,
+     'ArticleSpider.middlewares.RandomUserAgentMiddleware': 543,
+     'ArticleSpider.middlewares.JSPageMiddleware': 1,
     #defaultのmiddlewaresを消す
-    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
+     'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
 }
 
 # Enable or disable extensions

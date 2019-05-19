@@ -7,7 +7,7 @@
 
 from scrapy import signals
 from fake_useragent import UserAgent
-from tools.crawl_ip import GetIp
+
 
 
 class ArticlespiderSpiderMiddleware(object):
@@ -119,11 +119,36 @@ class RandomUserAgentMiddleware(object):
     def process_request(self, request, spider):
         def get_ua():
             return getattr(self.ua, self.ua_type)
-        request.headers.setdefault('USER_AGENT', get_ua())
+        request.headers.setdefault('User_Agent', get_ua())
 
 
-class RandomProxyMiddleware(object):
-    #ランダムipの設定
-    def process_request(self, request, spider):
-        get_ip = GetIp()
-        request.meta["proxy"] = get_ip.get_random_ip()
+# class RandomProxyMiddleware(object):
+#     #ランダムipの設定
+#     def process_request(self, request, spider):
+#         get_ip = GetIp()
+#         request.meta["proxy"] = get_ip.get_random_ip()
+
+
+# chromeでjs_readpageを取得
+from selenium import webdriver
+from scrapy.http import HtmlResponse
+class JSPageMiddleware(object):
+
+      def process_request(self, request, spider):
+          if spider.name == "zhihu":
+              spider.browser.get(request.url)
+              import time
+              time.sleep(3)
+              print("ドメイン{0}".format(request.url))
+              # responseなかのソースコードを初期化
+              # 直接spiderに返す                                                     #url先のコード
+              return HtmlResponse(url=spider.browser.current_url, body=spider.browser.page_source, encoding="utf-8",request=request)
+
+
+# chromeのノー画面起動
+from pyvirtualdisplay import Display
+display = Display(visible=0, size=(800, 600))
+display.start()
+
+browser = webdriver.Chrome()
+browser.get()

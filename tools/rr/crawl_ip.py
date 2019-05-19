@@ -76,9 +76,9 @@ class GetIp(object):
     def get_random_ip(self):
         #dbにランダムなipを取得
             random_sql = """
-                  SELECT ip, port FROM proxy_ip
-                  ORDER BY RANA()
-                  LIMIT 1      
+                    SELECT ip, port FROM proxy_ip
+                  ORDER BY RAND()
+                  LIMIT 1
             """
             result = cursor.execute(random_sql)
             for ip_info in cursor.fetchall():
