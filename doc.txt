@@ -2,3 +2,8 @@
 scrapy crawl lagou -s JOBDIR=job/001
 # 一時停止からの再起動
 scrapy crawl lagou -s JOBDIR=job/001
+
+#telnet scrapyの接続
+telnet localhost 6023
+  #scrapyの状態を確認
+  est()

@@ -23,15 +23,16 @@ class ZhihuSpider(scrapy.Spider):
     # custom_settings = {
     #    "COOKIES_ENABLED": True
     # }
-    def __init__(self):
-        self.browser = webdriver.Chrome(executable_path=driverPath)
-        super(ZhihuSpider, self).__init__()
-        dispatcher.connect(self.spider_closed, signals.spider_closed)
 
-    def spider_closed(self, spider):
-        #spider終わった時にブラウザを閉じる
-        print("spider closed")
-        self.browser.quit()
+    # def __init__(self):
+    #     self.browser = webdriver.Chrome(executable_path=driverPath)
+    #     super(ZhihuSpider, self).__init__()
+    #     dispatcher.connect(self.spider_closed, signals.spider_closed)
+    #
+    # def spider_closed(self, spider):
+    #     #spider終わった時にブラウザを閉じる
+    #     print("spider closed")
+    #     self.browser.quit()
 
     def parse(self, response):
         print(response.xpath("//dd[@class='fz24']/text()"))
