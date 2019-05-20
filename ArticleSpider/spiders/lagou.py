@@ -10,6 +10,7 @@ from ArticleSpider.items import LagouJobItemLoader, LagouJobItem
 from utils.common import get_md5
 from datetime import datetime
 from scrapy.loader import ItemLoader
+import platform
 
 
 class LagouSpider(CrawlSpider):
@@ -35,11 +36,19 @@ class LagouSpider(CrawlSpider):
         # 1.seleniumでログイン
         # x.cookieをファイルから取得
         cookies = []
-        if os.path.exists(os.path.abspath(os.path.join(os.getcwd(), "..")) + '\cookies\lagou.cookic'):
-            cookies = pickle.load(
-                open(os.path.abspath(os.path.join(os.getcwd(), "..")) + '\cookies\lagou.cookic', "rb"))
+        if platform.platform().startswith("Windows"):
+            if os.path.exists(os.path.abspath(os.path.join(os.getcwd(), "..")) + '\cookies\lagou.cookic'):
+                cookies = pickle.load(
+                    open(os.path.abspath(os.path.join(os.getcwd(), "..")) + '\cookies\lagou.cookic', "rb"))
+        else:
+            if os.path.exists(os.path.abspath(os.path.join(os.getcwd(), "..")) + '/cookies/lagou.cookic'):
+                cookies = pickle.load(
+                    open(os.path.abspath(os.path.join(os.getcwd(), "..")) + '/cookies/lagou.cookic', "rb"))
         if not cookies:
-            driverPath = os.path.abspath(os.path.join(os.getcwd(), "..")) + '\driver\chromedriver.exe'
+            if platform.platform().startswith("Windows"):
+                driverPath = os.path.abspath(os.path.join(os.getcwd(), "..")) + '\driver\chromedriver.exe'
+            else:
+                driverPath = os.path.abspath(os.path.join(os.getcwd())) + '/driver/chromedriver'
             browser = webdriver.Chrome(executable_path=driverPath)
             browser.get('https://passport.lagou.com/login/login.html')
             userInput = browser.find_element_by_xpath("//div[@class='form_body']//input[@class='input input_white']")

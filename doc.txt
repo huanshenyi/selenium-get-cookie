@@ -1,0 +1,4 @@
+# 一時停止用
+scrapy crawl lagou -s JOBDIR=job/001
+# 一時停止からの再起動
+scrapy crawl lagou -s JOBDIR=job/001

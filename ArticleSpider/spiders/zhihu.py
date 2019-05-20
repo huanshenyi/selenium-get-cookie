@@ -3,7 +3,15 @@ import scrapy
 from selenium import webdriver
 from scrapy.xlib.pydispatch import dispatcher
 from scrapy import signals
+import platform
+import os
 
+if platform.platform().startswith("Windows"):
+   driverPath = os.path.abspath(os.path.join(os.getcwd(), ".."))+"\driver\chromedriver.exe"
+else:
+   driverPath = os.path.abspath(os.path.join(os.getcwd(), "..")) + "/driver/chromedriver"
+
+print(driverPath)
 
 class ZhihuSpider(scrapy.Spider):
     name = 'zhihu'
@@ -16,7 +24,7 @@ class ZhihuSpider(scrapy.Spider):
     #    "COOKIES_ENABLED": True
     # }
     def __init__(self):
-        self.browser = webdriver.Chrome(executable_path="D:\program\spider\ArticleSpider\driver\chromedriver.exe")
+        self.browser = webdriver.Chrome(executable_path=driverPath)
         super(ZhihuSpider, self).__init__()
         dispatcher.connect(self.spider_closed, signals.spider_closed)
 
